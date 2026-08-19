@@ -1,3 +1,6 @@
+let allQuotesData = null;
+let remainingKeys = [];
+
 async function getData() {
     const dataGist = await fetch("https://gist.githubusercontent.com/Linkernel0x/30584121b4e364db49caf0e483f2cecb/raw/sillyData.json");
     return await dataGist.json();
@@ -16,8 +19,7 @@ function shuffle(array) {
 async function renderPage() {
     loadBoop();
     loadKorok();
-    let allQuotesData = null;
-    let remainingKeys = [];
+
     const quoteText = document.getElementById("quote-text");
     const quoteAuthor = document.getElementById("quote-author");
     const version = document.getElementById("version");
@@ -27,7 +29,7 @@ async function renderPage() {
     try {
         if (!allQuotesData) {
             const data = await getData();
-            version.innerHTML = "v" + data.version;
+            if (version && data.version) version.innerHTML = "v" + data.version;
             if (!data || !data.quotes) return;
             allQuotesData = data.quotes;
         }
@@ -66,22 +68,41 @@ function makeConfetti(x, y, amount = 50) {
     const canvas = document.getElementById('confetti');
     if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const ctx = canvas.getContext('2d');
-        let W, H, particles = [];
+        let W = canvas.width = window.innerWidth;
+        let H = canvas.height = window.innerHeight;
+        let particles = [];
 
-        function resize() {
-            W = canvas.width = window.innerWidth;
-            H = canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-        const canvas = document.getElementById('confetti');
         for (let i = 0; i < amount; i++) {
             particles.push({
-                x, y, vx: rand(-8, 8), vy: rand(-12, -2), r: rand(5, 10),
-                col: `hsl(${rand(0, 360)}, 80%, 60%)`, rot: rand(0, 360), spin: rand(-0.3, 0.3)
+                x, y,
+                vx: rand(-8, 8),
+                vy: rand(-12, -2),
+                r: rand(5, 10),
+                col: `hsl(${rand(0, 360)}, 80%, 60%)`,
+                gravity: 0.3
             });
         }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.gravity;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.col;
+                ctx.fill();
+
+                if (p.y > H) particles.splice(index, 1);
+            });
+
+            if (particles.length > 0) {
+                requestAnimationFrame(draw);
+            }
+        }
+        draw();
     }
 }
 
@@ -89,19 +110,19 @@ async function loadKorok() {
     const korok = document.getElementById('secret-korok');
     const dialog = document.getElementById('korok-dialog');
     const closeButton = document.getElementById('close-button');
-    if (korok) {
-        korok.addEventListener('click', () => {
-            dialog.showModal();
-            makeConfetti(window.innerWidth / 2, window.innerHeight / 2, 200);
-            korok.style.display = 'none';
-        });
-    }
+
+    if (!korok || !dialog || !closeButton) return;
+
+    korok.addEventListener('click', () => {
+        dialog.showModal();
+        makeConfetti(window.innerWidth / 2, window.innerHeight / 2, 200);
+        korok.style.display = 'none';
+    });
+
     closeButton.addEventListener('click', () => {
         dialog.close();
     });
 }
-
-document.addEventListener("DOMContentLoaded", renderPage);
 
 document.addEventListener("DOMContentLoaded", () => {
     const toggleBtn = document.getElementById("theme-toggle");
@@ -109,13 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "light") {
-        document.body.classList.add("light-mode");
+        document.documentElement.classList.add("light-mode");
         toggleBtn.querySelector("i").className = "fa-solid fa-sun";
     }
 
     toggleBtn.addEventListener("click", () => {
-        document.body.classList.toggle("light-mode");
-        const isLight = document.body.classList.contains("light-mode");
+        document.documentElement.classList.toggle("light-mode");
+        const isLight = document.documentElement.classList.contains("light-mode");
 
         const icon = toggleBtn.querySelector("i");
         icon.className = isLight ? "fa-solid fa-sun" : "fa-solid fa-moon";
@@ -123,3 +144,5 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", isLight ? "light" : "dark");
     });
 });
+
+document.addEventListener("DOMContentLoaded", renderPage);
