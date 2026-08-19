@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linkernel - a silly guy :3</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="top-brand">
+    <h1><span class="terminal-prompt">~/</span>Linkernel</h1>
+</div>
+
+<nav class="floating-nav" aria-label="Main Navigation">
+    <a href="index.html" data-tooltip="Home"><i class="fa-solid fa-house"></i></a>
+    <a href="projects.html" data-tooltip="Projects"><i class="fa-solid fa-code-branch"></i></a>
+    <a href="contact.html" data-tooltip="Contact/Ping"><i class="fa-solid fa-satellite-dish"></i></a>
+    <hr>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+</nav>
+
+<main class="container">
+    <div class="bento-grid" style="margin-top: 0;">
+        <div class="bento-card bento-span-2">
+            <h2><span class="terminal-prompt">~/</span>ping -c 4 linkernel</h2>
+            <p>Let's chat about Zelda lore, how much JavaScript is too much JavaScript, or your whatever you like :3</p>
+            <form id="contactForm" style="margin-top: 1.5rem;">
+                <input id="alias" type="text" placeholder="Your Alias" required />
+                <input id="subject" type="text" placeholder="Subject" required />
+                <textarea id="bodyText" rows="5" placeholder="Transmit your thoughts here..." required></textarea>
+                <button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i> Send Packet</button>
+            </form>
+        </div>
+
+        <div class="bento-card bento-span-2" style="background: rgba(0,0,0,0.4);">
+            <h3 style="color: var(--accent-purple);"><i class="fa-solid fa-network-wired"></i> Social Nodes</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                <a href="https://github.com/Linkernel0x" class="btn btn-outline" style="justify-content: flex-start; padding: 1rem;"><i class="fa-brands fa-github fa-lg"></i> github.com/Linkernel0x</a>
+                <a class="btn btn-outline" style="justify-content: flex-start; padding: 1rem;">I go as Link on Hackclub Slack</a>
+                <a href="mailto:240083544+Linkernel0x@users.noreply.github.com" class="btn btn-outline" style="justify-content: flex-start; padding: 1rem; font-size: 12px"><i class="fa-solid fa-envelope fa-lg"></i> 240083544+Linkernel0x@users.noreply.github.com</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    Made with <i class="fa-solid fa-heart" style="color: var(--accent-red);"></i> by Linkernel © 2026<br>
+</footer>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script src="scripts/index.js"></script>
+<script src="scripts/contact.js"></script>
+</body>
+</html>
