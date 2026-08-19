@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My silly Projects :3</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="top-brand">
+    <h1><span class="terminal-prompt">~/</span>Linkernel</h1>
+</div>
+
+<nav class="floating-nav" aria-label="Main Navigation">
+    <a href="index.html" data-tooltip="Home"><i class="fa-solid fa-house"></i></a>
+    <a href="projects.html" data-tooltip="Projects"><i class="fa-solid fa-code-branch"></i></a>
+    <a href="contact.html" data-tooltip="Contact/Ping"><i class="fa-solid fa-satellite-dish"></i></a>
+    <hr>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+</nav>
+
+<main class="container">
+    <h2><span class="terminal-prompt">ls -la</span> ~/projects/</h2>
+    <p>Here are listed some of the projects I'm working on, or I've worked on, give them a try!</p>
+    <p>A green dot means active development, cyan means frozen/released, yellow means in dev, and red means paused or archived.</p>
+
+    <div id="projects-list" class="projects-grid"></div>
+</main>
+
+<footer>
+    Made with <i class="fa-solid fa-heart" style="color: var(--accent-red);"></i> by Linkernel © 2026<br>
+</footer>
+
+<script src="scripts/index.js"></script>
+<script src="scripts/projects.js"></script>
+</body>
+</html>
